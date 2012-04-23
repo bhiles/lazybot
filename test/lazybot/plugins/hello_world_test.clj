@@ -12,9 +12,14 @@
     (binding [lazybot.registry/send-message mock-send-message]
       (respond {:bot bot :command "hiworld"}))))
 
-(deftest test-hello-world-not
+(deftest test-not-full-trigger
   (let [bot (ref {})]
     (load-this-plugin nil bot)
       (let [resp (respond {:bot bot :command "hiworl"})]
-        (println "response is " resp)
-        (is (= nil resp)))))
+        (is (= nil (resp))))))
+
+(deftest test-more-than-trigger
+  (let [bot (ref {})]
+    (load-this-plugin nil bot)
+    (let [resp (respond {:bot bot :command "hiworlds"})]
+      (is (= nil (resp))))))
