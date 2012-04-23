@@ -62,7 +62,7 @@
 
 ;; This is what you should use for sending messages.
 ;; TODO: Document
-(defn send-message [{:keys [com bot channel]} s & {:keys [action? notice?]}]
+(defn ^:dynamic send-message [{:keys [com bot channel]} s & {:keys [action? notice?]}]
   (if-let [result (call-message-hooks com bot channel s action?)]
     ((cond
       action? ircb/send-action
