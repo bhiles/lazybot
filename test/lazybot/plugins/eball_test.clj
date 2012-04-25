@@ -6,18 +6,19 @@
         [clojure.string :only [split trim]]))
 
 (defn assert-valid
-  "Asserts the command returns a valid response."
-  [command]
-  (let [bot (ref {})]
-    (load-this-plugin nil bot)
+  "Asserts the plugin responds correctly."
+  ([command] (assert-valid command "fakenick"))
+  ([command nick]
+    (let [bot (ref {})]
+      (load-this-plugin nil bot)
       (defn mock-send-message [com-m s & args]
         (let [message-parts (split s #": ")]
-          (is (= (first message-parts) ""))
+          (is (= (trim (first message-parts)) nick))
           (is (true? (some #(= (trim (second message-parts)) %) responses)))
           true))
       (binding [lazybot.registry/send-message mock-send-message]
         (let [resp (respond {:bot bot :command command})]
-          (is (true? (resp nil)))))))
+          (is (true? (resp {:bot bot :nick nick}))))))))
 
 (defn assert-invalid
   "Asserts the command doesn't return a response"
@@ -35,6 +36,9 @@
 
 (deftest test-should
   (assert-valid "should"))
+
+(deftest test-nick
+  (assert-valid "8ball" "mynick"))
 
 (deftest test-scentence
   (assert-invalid "will I win the lottery?"))
