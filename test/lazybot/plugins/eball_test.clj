@@ -1,4 +1,4 @@
-(ns lazybot.plugins.eball_test
+(ns lazybot.plugins.eball-test
   (:use [lazybot.core]
         [lazybot.registry]
         [lazybot.plugins.eball] :reload-all)

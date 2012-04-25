@@ -1,4 +1,4 @@
-(ns lazybot.plugins.hello_world_test
+(ns lazybot.plugins.hello-world-test
   (:use [lazybot.core]
         [lazybot.registry]
         [lazybot.plugins.hello-world] :reload-all)
