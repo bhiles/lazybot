@@ -10,16 +10,17 @@
     (defn mock-send-message [com-m s & args]
       (is (= "Hello, World!" s)))
     (binding [lazybot.registry/send-message mock-send-message]
-      (respond {:bot bot :command "hiworld"}))))
+      (let [resp (respond {:bot bot :command "hiworld"})]
+        (is (= true (resp nil)))))))
 
 (deftest test-not-full-trigger
   (let [bot (ref {})]
     (load-this-plugin nil bot)
       (let [resp (respond {:bot bot :command "hiworl"})]
-        (is (= nil (resp))))))
+        (is (= nil (resp nil))))))
 
 (deftest test-more-than-trigger
   (let [bot (ref {})]
     (load-this-plugin nil bot)
     (let [resp (respond {:bot bot :command "hiworlds"})]
-      (is (= nil (resp))))))
+      (is (= nil (resp nil))))))
