@@ -12,9 +12,9 @@
     (let [bot (ref {})]
       (load-this-plugin nil bot)
       (defn mock-send-message [com-m s & args]
-        (let [message-parts (split s #": ")]
-          (is (= (trim (first message-parts)) nick))
-          (is (true? (some #(= (trim (second message-parts)) %) responses)))
+        (let [[parsed-nick parsed-message] (map trim (split s #": "))]
+          (is (= nick parsed-nick))
+          (is (true? (some #(= parsed-message %) responses)))
           true))
       (binding [lazybot.registry/send-message mock-send-message]
         (let [resp (respond {:bot bot :command command})]
