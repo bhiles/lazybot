@@ -37,6 +37,3 @@
 
 (deftest test-dec
   (assert-value "test-user-dec" "dec" "-1"))
-
-(deftest test-invalid-command
-  (assert-value "test-user-inv" "invalid-command" "You want me to leave karma the same? Fine, I will."))
