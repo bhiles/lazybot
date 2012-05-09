@@ -22,8 +22,8 @@
               (alter word-count assoc (keyword word) (+ 1 ((keyword word) @word-count 0))))
             (println "word count after " @word-count)
             (println "remainign words after " @remaining-words)
-            ; if remaining-words is empty, the say ":nick Dude, you need to use some new words you just won BUZZWORD BINGO!"
-            ; "Found WORD on :nick's buzzword bingo card"
-            (send-message com-m (str "Found " word " on " nick "'s buzzword bingo card"))))))))
+            (if (empty? @remaining-words)
+              (send-message com-m (str nick "!!! You just got BINGO!!! You should probably read a book and learn some new words"))
+              (send-message com-m (str "Found " word " on " nick "'s buzzword bingo card")))))))))
 
 
