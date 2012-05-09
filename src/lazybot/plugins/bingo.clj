@@ -3,7 +3,6 @@
 
 (def words (ref #{"hi" "bye"}))
 (def remaining-words (ref #{"hi" "bye"}))
-(def word-count (ref {}))
 
 (defplugin
   (:hook
@@ -15,12 +14,9 @@
         (if-let [match (re-find (re-pattern word) message)]
           (do
             (println "match value is " match)
-            (println "word count before " @word-count)
             (println "remainign words before " @remaining-words)
             (dosync
-              (ref-set remaining-words (into #{} (remove #{word} @remaining-words)))
-              (alter word-count assoc (keyword word) (+ 1 ((keyword word) @word-count 0))))
-            (println "word count after " @word-count)
+              (ref-set remaining-words (into #{} (remove #{word} @remaining-words))))
             (println "remainign words after " @remaining-words)
             (if (empty? @remaining-words)
               (send-message com-m (str nick "!!! You just got BINGO!!! You should probably read a book and learn some new words"))
